@@ -6,6 +6,6 @@
     <p><%= image_tag food.image.url %></p>
 <% end %>
 
-<p><b>Category: </b><%= food.category.name %></p>
+<p><b>Category: </b><%= link_to food.category.name, 'categories/' + food.category.name %></p>
 <p><b>Price: </b><%= food.price %></p>
 <br/>

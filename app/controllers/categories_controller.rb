@@ -1,7 +1,16 @@
 class CategoriesController < ApplicationController
+
+  # Show 
   def show
-    @id = Category.find_by(name: params[:name])
-    @foods = Food.where(category_id: @id).page(params[:page])
+    @name = params[:name]
+    @cat = Category.where('lower(name) = ?', @name.downcase).first
+    @id
+
+    if @cat.present?
+      @id= @cat.id
+    end
+
+    @foods = Food.where(category_id: @id).page(params[:page]).per(1)
 
     if !@foods.present?
       redirect_to root_path
