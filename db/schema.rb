@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_04_155501) do
+ActiveRecord::Schema.define(version: 2018_11_04_175841) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -52,6 +52,14 @@ ActiveRecord::Schema.define(version: 2018_11_04_155501) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_foods_on_category_id"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.string "permalink"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
