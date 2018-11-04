@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
 
-  # Show 
+  # Show foods of a specific category by GET of a name
   def show
     @name = params[:name]
     @cat = Category.where('lower(name) = ?', @name.downcase).first
@@ -10,7 +10,7 @@ class CategoriesController < ApplicationController
       @id= @cat.id
     end
 
-    @foods = Food.where(category_id: @id).page(params[:page]).per(1)
+    @foods = Food.where(category_id: @id).page(params[:page]).per(5)
 
     if !@foods.present?
       redirect_to root_path
