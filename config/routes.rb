@@ -6,7 +6,8 @@ Rails.application.routes.draw do
 
   resources :foods, only: [:index, :show]
   get ':permalink', to: 'pages#permalink'
-  get 'categories/:name/:page', to: 'categories#show'  
+  get 'categories/:name/:page', to: 'categories#show'
+  get 'categories/:name/', to: 'categories#show'
   
   root to: 'foods#index'
 end
