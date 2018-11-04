@@ -1,5 +1,10 @@
 class CategoriesController < ApplicationController
 
+  # Show all Categories
+  def index
+    @categories = Category.all
+  end
+
   # Show foods of a specific category by GET of a name
   def show
     @name = params[:name]
