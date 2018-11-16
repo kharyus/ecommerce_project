@@ -2,14 +2,25 @@
   <tr>
     <th>Item</th>
     <th>Quantity</th>
+    <th>Price</th>
   </tr>
     <% @foods.each do |food| %>
       <tr>
         <td><%= food.name %></td>
-        <td><%= session[:cart]["#{food.id}"]["quantity"] %></td>
+        <td>
+            <%= form_tag("/foods/change_quantity/#{food.id}", method: "get") do %>
+                <%= number_field_tag(:quantity, session[:cart]["#{food.id}"]["quantity"]) %>
+                <%= submit_tag("Change Quantity") %>
+            <% end %>
+        </td>
+        <td>
+            <%= food.price * session[:cart]["#{food.id}"]["quantity"].to_i %>
+        </td>
       </tr>
     <% end %>
 
 </table>
+
+<h2>Total: <%= @total %></h2>
 
 <%= link_to 'Back to Index', root_path %>

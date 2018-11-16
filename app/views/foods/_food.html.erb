@@ -3,18 +3,19 @@
 </h2>
 
 <% if food.image.present? %>
-    <p><%= image_tag food.image.url %></p>
+    <p><%= image_tag(food.image.url, :class => "img-thumbnail") %></p>
 <% end %>
 
 <p><b>Category: </b><%= link_to food.category.name, '/categories/' + food.category.name %></p>
 <p><b>Price: </b><%= food.price %></p>
-<% if session[:cart]["#{food.id}"] %>
-    <p><%= link_to '<i class="fas fa-cart-arrow-down fa-3x removeFromCart"></i>'.html_safe, "/foods/remove_from_cart/#{food.id}"     %></p>
-<% else %>
-    <p><%= link_to '<i class="fas fa-cart-plus fa-3x addToCart"></i>'.html_safe, "/foods/add_to_cart/#{food.id}"     %></p>
-<% end%>
 
-<!-- Debugging -->
-<!--<p><%= session[:cart] %></p>-->
+<!-- Try to initalize session -->
+<% session[:cart] ||= {} %>
+
+<% if session[:cart]["#{food.id}"] %>
+    <p><%= link_to '<i class="fas fa-cart-arrow-down fa-3x text-danger"></i>'.html_safe, "/foods/remove_from_cart/#{food.id}"     %></p>
+<% else %>
+    <p><%= link_to '<i class="fas fa-cart-plus fa-3x text-success"></i>'.html_safe, "/foods/add_to_cart/#{food.id}"     %></p>
+<% end%>
 
 <br/>

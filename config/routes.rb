@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'foods/add_to_cart/:id', to: 'foods#add_to_cart'
   get 'foods/remove_from_cart/:id', to: 'foods#remove_from_cart'
   get 'foods/show_cart', to: 'foods#show_cart'
+  get 'foods/change_quantity/:id/', to: 'foods#change_quantity'
   get 'foods/:id', to: 'foods#show'
   get 'categories/', to: 'categories#index'
   get ':permalink', to: 'pages#permalink'

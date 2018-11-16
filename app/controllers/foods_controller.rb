@@ -21,22 +21,32 @@ class FoodsController < ApplicationController
 
   def add_to_cart
     session[:cart] ||= {}
-    id = params[:id];
+    id = params[:id]
     session[:cart][id] = {quantity: 1}
     redirect_back fallback_location: root_path
   end
 
   def remove_from_cart
     session[:cart] ||= {}
-    id = params[:id];
+    id = params[:id]
     session[:cart] = session[:cart].except(id)
     redirect_back fallback_location: root_path
   end
 
   def show_cart
     @foods = []
+    @total = 0
     session[:cart].keys.each do |key|
-      @foods.push(Food.find(key));
+      food = Food.find(key);
+      @foods.push(food);
+      @total += food.price * session[:cart]["#{food.id}"]["quantity"].to_i
     end
+  end
+
+  def change_quantity
+    session[:cart] ||= {}
+    id = params[:id]
+    session[:cart][id] = {quantity: params[:quantity]}
+    redirect_back fallback_location: root_path
   end
 end
