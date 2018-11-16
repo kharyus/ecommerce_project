@@ -1,0 +1,15 @@
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Quantity</th>
+  </tr>
+    <% @foods.each do |food| %>
+      <tr>
+        <td><%= food.name %></td>
+        <td><%= session[:cart]["#{food.id}"]["quantity"] %></td>
+      </tr>
+    <% end %>
+
+</table>
+
+<%= link_to 'Back to Index', root_path %>
