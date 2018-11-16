@@ -12,6 +12,6 @@ ActiveAdmin.register User do
 #   permitted
 # end
 
-permit_params :name, :taxes
+permit_params :username, :password_hash, :name, :address, :province_id
 
 end

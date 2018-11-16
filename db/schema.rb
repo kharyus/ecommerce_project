@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_16_193204) do
+ActiveRecord::Schema.define(version: 2018_11_16_194827) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -67,6 +67,17 @@ ActiveRecord::Schema.define(version: 2018_11_16_193204) do
     t.decimal "taxes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "password_hash"
+    t.string "name"
+    t.string "address"
+    t.integer "province_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["province_id"], name: "index_users_on_province_id"
   end
 
 end
