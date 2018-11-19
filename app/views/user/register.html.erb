@@ -1,0 +1,39 @@
+
+<br/>
+<%= form_tag("/user/register_submit", method: "post") do %>
+    <h2>Registration</h2>
+
+    <%= label_tag(:username, "Username: ") %>
+    <%= text_field_tag(:username) %>
+    <br/>
+
+    <%= label_tag(:password, "Password: ") %>
+    <%= password_field_tag(:password) %>
+    <br/>
+
+    <%= label_tag(:password_confirmation, "Password Confirmation: ") %>
+    <%= password_field_tag(:password_confirmation) %>
+    <br/>
+
+    <%= label_tag(:name, "Name: ") %>
+    <%= text_field_tag(:name) %>
+    <br/>
+
+    <%= label_tag(:address, "Address: ") %>
+    <%= text_field_tag(:address) %>
+    <br/>
+
+    <%= label_tag(:email, "Email: ") %>
+    <%= text_field_tag(:email) %>
+    <br/>
+
+    <%= label_tag(:province, "Province: ") %>
+    <%= select_tag(:province, options_from_collection_for_select(@provinces, 'id', 'name')) %>
+    <br/>
+
+    <%= submit_tag("Register") %>
+
+    <% if flash[:message] %>
+        <h3 class="text-danger"><%= flash[:message] %></h3>
+    <% end %>
+<% end %>

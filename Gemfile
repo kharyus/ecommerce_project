@@ -43,6 +43,7 @@ gem 'rubocop'
 gem 'kaminari'
 gem 'bootstrap'
 gem 'jquery-rails'
+gem 'bcrypt'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
