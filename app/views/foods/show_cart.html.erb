@@ -23,4 +23,13 @@
 
 <h2>Total: <%= @total %></h2>
 
-<%= link_to 'Register', "/user/register" %>
+<% if session[:name] %>
+  <div class="welcome">
+    <%= button_to "Checkout", 'foods/checkout' %>
+  </div>
+<% else %>
+  <nav class="nav">
+    <%= link_to "Login", "/user/login", class: "nav-link active" %>
+    <%= link_to "Register", "/user/register", class: "nav-link active" %>
+  </nav>
+<% end %>

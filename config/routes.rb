@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
   get 'user/register', to: 'user#register'
   post 'user/register_submit', to: 'user#register_submit'
+  get 'user/login', to: 'user#login'
+  post 'user/login_submit', to: 'user#login_submit'
   
   root to: 'foods#index'
 end

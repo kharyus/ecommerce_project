@@ -4,6 +4,6 @@ class User < ApplicationRecord
   #validates :password, confirmation: true # This breaks everything
   validates :username, :password_hash, :name, :address, :province_id, :email, presence: true
 
-  validates :email, uniqueness: true
+  validates :username, :email, uniqueness: true
 
 end

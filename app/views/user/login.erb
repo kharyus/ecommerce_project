@@ -1,0 +1,18 @@
+
+<br/>
+<%= form_tag("/user/login_submit", method: "post") do %>
+    <h2>Login</h2>
+
+    <%= label_tag(:username, "Username: ") %>
+    <%= text_field_tag(:username) %>
+    <br/>
+
+    <%= label_tag(:password, "Password: ") %>
+    <%= password_field_tag(:password) %>
+    <br/>
+    <%= submit_tag("Login") %>
+
+    <% if flash[:message] %>
+        <h3 class="text-danger"><%= flash[:message] %></h3>
+    <% end %>
+<% end %>
