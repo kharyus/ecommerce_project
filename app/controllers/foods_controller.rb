@@ -34,13 +34,7 @@ class FoodsController < ApplicationController
   end
 
   def show_cart
-    @foods = []
-    @total = 0
-    session[:cart].keys.each do |key|
-      food = Food.find(key);
-      @foods.push(food);
-      @total += food.price * session[:cart]["#{food.id}"]["quantity"].to_i
-    end
+    getTotals()
   end
 
   def change_quantity
@@ -48,5 +42,44 @@ class FoodsController < ApplicationController
     id = params[:id]
     session[:cart][id] = {quantity: params[:quantity]}
     redirect_back fallback_location: root_path
+  end
+
+  def checkout
+    user = User.find(session[:userid])
+
+    if user
+      getTotals()
+
+      order = Order.create({:user_id => session[:userid], :total => @total, :status => "Pending"})
+
+      session.delete(:cart)
+
+      redirect_to '/foods/checkout_success'
+    else
+      flash[:message] = "Order was not successful"
+
+      redirect_back fallback_location: root_path
+    end
+  end
+
+  private
+  def getTotals
+    @foods = []
+    @total = 0
+    session[:cart].keys.each do |key|
+      food = Food.find(key);
+      @foods.push(food);
+      @total += food.price * session[:cart]["#{food.id}"]["quantity"].to_i
+    end
+
+    @subtotal = @total
+    
+    if session[:userid]
+      user = User.find(session[:userid])
+      @taxRate = user.province.taxes * 100
+      @totalTaxes = user.province.taxes * @total
+
+      @total += @totalTaxes
+    end
   end
 end

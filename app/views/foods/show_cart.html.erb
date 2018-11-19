@@ -14,18 +14,30 @@
             <% end %>
         </td>
         <td>
-            <%= food.price * session[:cart]["#{food.id}"]["quantity"].to_i %>
+            <%= number_to_currency(food.price * session[:cart]["#{food.id}"]["quantity"].to_i) %>
         </td>
       </tr>
     <% end %>
 
 </table>
 
-<h2>Total: <%= @total %></h2>
+<h3>Subtotal: <%= number_to_currency(@subtotal) %></h3>
+
+<% if @totalTaxes %>
+  <h3>Taxes(<%= number_with_precision(@taxRate, precision: 0) %>%): <%= number_to_currency(@totalTaxes) %></h3>
+  <h2>Total: <%= number_to_currency(@total) %></h2>
+<% else %>
+  <h3>Register/Login to view taxes from your province/territory.</h3>
+  <h2>Total: <%= number_to_currency(@total) %> Plus Taxes</h2>
+<% end %>
+
+<% if flash[:message] %>
+  <h2 class="text-danger"><%= flash[:message] %></h2>
+<% end %>
 
 <% if session[:name] %>
   <div class="welcome">
-    <%= button_to "Checkout", 'foods/checkout' %>
+    <%= button_to "Proceed to Checkout", '/foods/checkout' %>
   </div>
 <% else %>
   <nav class="nav">

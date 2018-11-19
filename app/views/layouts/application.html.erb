@@ -22,19 +22,25 @@
 
     <!-- Shopping Cart -->
     <div class="shoppingCart">
-      <% if session[:cart].keys.count == 0 %>
+      <% if !session[:cart] || session[:cart].keys.count == 0 %>
         <i class="fas fa-shopping-cart fa-5x"></i>
       <% else %>
         <%= link_to '<i class="fas fa-shopping-cart fa-5x"></i>'.html_safe, "/foods/show_cart" %>
       <% end %>
-      <span class="cartCount"><%= session[:cart].keys.count %></span>
+      
+      <% if session[:cart] %>
+        <span class="cartCount"><%= session[:cart].keys.count %></span>
+      <% else %>
+        <span class="cartCount">0</span>
+      <% end %>
     </div>
 
     <!-- Login and Register or username displayed -->
     <div class="login">
       <% if session[:name] %>
         <div class="welcome">
-          Hello <strong><%= session[:name] %></strong>
+          <span>Hello <strong><%= session[:name] %></strong>.</span>
+          <%= link_to "Logout", "/user/logout"%>
         </div>
       <% else %>
         <nav class="nav">

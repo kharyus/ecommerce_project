@@ -63,4 +63,12 @@ class UserController < ApplicationController
         end
     end
 
+    def logout
+        session.delete(:userid)
+        session.delete(:username)
+        session.delete(:name)
+
+        redirect_to root_path
+    end
+
 end

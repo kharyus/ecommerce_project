@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+  post 'foods/checkout', to: 'foods#checkout'
+  get 'foods/checkout_success', to: 'foods#checkout_success'
   get 'foods/search_results/', to: 'foods#search_results'
   get 'foods/add_to_cart/:id', to: 'foods#add_to_cart'
   get 'foods/remove_from_cart/:id', to: 'foods#remove_from_cart'
@@ -19,6 +21,7 @@ Rails.application.routes.draw do
   post 'user/register_submit', to: 'user#register_submit'
   get 'user/login', to: 'user#login'
   post 'user/login_submit', to: 'user#login_submit'
+  get 'user/logout', to: 'user#logout'
   
   root to: 'foods#index'
 end
