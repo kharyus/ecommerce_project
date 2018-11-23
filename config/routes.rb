@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
+  
+  post 'foods/pay', to: 'foods#pay'
+  get 'foods/payment_successful', to: 'foods#payment_successful'
   post 'foods/checkout', to: 'foods#checkout'
   get 'foods/checkout_success', to: 'foods#checkout_success'
   get 'foods/search_results/', to: 'foods#search_results'
@@ -22,6 +24,11 @@ Rails.application.routes.draw do
   get 'user/login', to: 'user#login'
   post 'user/login_submit', to: 'user#login_submit'
   get 'user/logout', to: 'user#logout'
+
+  get 'order/index'
+  get 'order/:id', to: 'order#show'
+
+  resources :charges
   
   root to: 'foods#index'
 end

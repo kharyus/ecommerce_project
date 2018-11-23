@@ -1,0 +1,24 @@
+<% if !@foodsOrders.empty? %>
+    <table>
+    <tr>
+        <th>Food</th>
+        <th>Quantity</th>
+        <th><strong>Current</strong> Price per Unit</th>
+        <th><strong>Current</strong> Total Price</th>
+    </tr>
+
+        <% @foodsOrders.each do |foodsOrder| %>
+            <tr>
+                <td><%= foodsOrder.food.name %></td>
+                <td><%= foodsOrder.quantity %></td>
+                <td><%= number_to_currency(foodsOrder.food.price) %></td>
+                <td><%= number_to_currency(foodsOrder.food.price * foodsOrder.quantity) %></td>
+            </tr>
+        <% end %>
+
+    </table>
+<% else %>
+    <h3>This order was made before having a joint table, therefore the joint table is empty.</h3>
+<% end %>
+
+<h2>Total: <%= number_to_currency(@order.total) %></h2>

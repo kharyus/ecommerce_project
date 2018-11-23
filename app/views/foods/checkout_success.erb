@@ -1,3 +1,15 @@
 <h1>Your order was successful!</h1>
 
+<h2>Amount Due: <%= number_to_currency(@total) %></h2>
+
+<form action="/foods/pay" method="POST">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-description="Foods Winnipeg"
+            data-amount="<%= @total * 100 %>"
+            data-locale="auto"></script>
+</form>
+<br/>
+
 <%= link_to "Go Back", root_path %>

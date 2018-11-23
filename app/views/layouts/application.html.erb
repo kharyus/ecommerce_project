@@ -40,6 +40,7 @@
       <% if session[:name] %>
         <div class="welcome">
           <span>Hello <strong><%= session[:name] %></strong>.</span>
+          <%= link_to "Orders", "/order/index"%>
           <%= link_to "Logout", "/user/logout"%>
         </div>
       <% else %>

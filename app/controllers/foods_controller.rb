@@ -52,7 +52,11 @@ class FoodsController < ApplicationController
 
       order = Order.create({:user_id => session[:userid], :total => @total, :status => "Pending"})
 
-      session.delete(:cart)
+      # Save order into session
+      session[:order] = order.id
+
+      # Create the food orders
+      createFoodsOrders
 
       redirect_to '/foods/checkout_success'
     else
@@ -60,6 +64,44 @@ class FoodsController < ApplicationController
 
       redirect_back fallback_location: root_path
     end
+  end
+
+  def checkout_success
+    getTotals()
+
+    session[:total] = @total
+    session.delete(:cart)
+  end
+
+  def pay
+    # Amount in cents
+    @amount = ((session[:total].to_f) * 100).round
+  
+    customer = Stripe::Customer.create(
+      :email => params[:stripeEmail],
+      :source  => params[:stripeToken]
+    )
+  
+    charge = Stripe::Charge.create(
+      :customer    => customer.id,
+      :amount      => @amount,
+      :description => 'Rails Stripe customer',
+      :currency    => 'cad'
+    )
+
+    redirect_to '/foods/payment_successful'
+  
+  rescue Stripe::CardError => e
+    flash[:error] = e.message
+    redirect_to new_charge_path
+  end
+
+  def payment_successful
+    order = Order.find(session[:order])
+
+    order.status = "Paid"
+
+    order.save
   end
 
   private
@@ -80,6 +122,16 @@ class FoodsController < ApplicationController
       @totalTaxes = user.province.taxes * @total
 
       @total += @totalTaxes
+    end
+  end
+
+  private
+  def createFoodsOrders
+    session[:cart].keys.each do |key|
+      food = Food.find(key);
+      quantity = session[:cart]["#{food.id}"]["quantity"].to_i
+
+      foodsOrder = FoodsOrder.create({:order_id => session[:order], :food_id => food.id, :quantity => quantity})
     end
   end
 end
